@@ -13,6 +13,7 @@ const Home = () => {
   localStorage.removeItem('app-token')
   
   const handleSubmitLogin = async values => {
+    console.log("valores: ", values);
     await axios.post(`${process.env.REACT_APP_HOST}/v1/api/auth`, values)
     .then(resp => {
       const { data } = resp
