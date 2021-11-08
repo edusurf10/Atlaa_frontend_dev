@@ -13,21 +13,24 @@ const Home = () => {
   localStorage.removeItem('app-token')
   
   const handleSubmitLogin = async values => {
-    console.log("valores: ", values);
-    await axios.post(`${process.env.REACT_APP_HOST}/v1/api/auth`, values)
-    .then(resp => {
-      const { data } = resp
-      if (data) {
-        localStorage.setItem('app-token', data)
-        history.push('/panel')
-      }
-      else {
-        console.log("FALHA NO LOGIN ! ")
-      }
-    })
-    .catch(error => {
-      console.log("Erro na requisição a API: ", error)
-    })
+    if (values.username == '' || values.password == '') {
+      alert("Campos Login e Senha devem ser preenchidos!");
+    } else{
+      await axios.post(`${process.env.REACT_APP_HOST}/v1/api/auth`, values)
+      .then(resp => {
+        const { data } = resp
+        if (data) {
+          localStorage.setItem('app-token', data)
+          history.push('/panel')
+        }
+        else {
+          console.log("FALHA NO LOGIN ! ")
+        }
+      })
+      .catch(error => {
+        console.log("Erro na requisição a API: ", error)
+      })
+    }
   }
 
   const handleSubmitRegister = async values => {
